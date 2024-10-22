@@ -32,6 +32,8 @@ func _on_right_controller_button_pressed(name: String) -> void:
 		# Toggle the right laser visibility and interaction
 		right_laser_on = !right_laser_on  # Toggle the state (on/off)
 		_toggle_laser(right_laser, right_laser_ray, right_laser_on)
+	if name=="primary_click":
+		XRServer.center_on_hmd(XRServer.RESET_BUT_KEEP_TILT, true)
 
 
 func _on_left_controller_button_pressed(name: String) -> void:
@@ -50,9 +52,6 @@ func _toggle_laser(laser_mesh: MeshInstance3D, laser_raycast: RayCast3D, laser_o
 	else:
 		print("Laser is OFF")
 		
-func _on_openxr_pose_recentered() -> void:
-	# Recenter the player's position but keep the tilt (head rotation)
+func _on_pose_recentered() -> void:
 	XRServer.center_on_hmd(XRServer.RESET_BUT_KEEP_TILT, true)
-	
-	# Reset the player's Y position to the initial value
-	global_position.y = yPos
+		

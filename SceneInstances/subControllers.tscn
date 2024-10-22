@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://coagx1yan81vk"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jw5iy"]
+
+[node name="Left Controller" type="XRController3D"]
+tracker = &"left_hand"
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_jw5iy")

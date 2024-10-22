@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Assignment1"
-run/main_scene="res://Scenes/finalassignment1.tscn"
+run/main_scene="res://SceneInstances/Assignment2.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 

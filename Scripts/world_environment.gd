@@ -1,8 +1,8 @@
 extends WorldEnvironment
 
 # Preload both cube scenes
-var blue_cube_scene = preload("res://SceneInstance/BlueCube.tscn")  # Path to the blue cube scene
-var red_cube_scene = preload("res://SceneInstance/RedCube.tscn")  # Path to the red cube scene
+var blue_cube_scene = preload("res://SceneInstances/BlueCube.tscn")  # Path to the blue cube scene
+var red_cube_scene = preload("res://SceneInstances/RedCube.tscn")  # Path to the red cube scene
 
 var timer = Timer.new()
 
@@ -25,28 +25,27 @@ func _on_timer_timeout() -> void:
 	var cube_instance = cube_scene.instantiate()  
 	add_child(cube_instance)  # Add the cube instance to the current scene
 	
+	# Get the cube's collision shape and set the appropriate layer and mask
 	var collision_shape = cube_instance.get_node("CollisionShape3D")  # Adjust if your node structure differs
 	if collision_shape != null:
-		# Set the collision layer for the cube
 		if cube_scene == blue_cube_scene:
-			# If it's a blue cube, set it to collision layer 9
+			# If it's a blue cube, set it to collision layer 9 (interacts with left sword)
 			collision_shape.set_collision_layer(9)
+			collision_shape.set_collision_mask(1 << 9)  # Only interacts with the left sword on layer 9
 		else:
-			# If it's a red cube, set it to collision layer 10
+			# If it's a red cube, set it to collision layer 10 (interacts with right sword)
 			collision_shape.set_collision_layer(10)
+			collision_shape.set_collision_mask(1 << 10)  # Only interacts with the right sword on layer 10
 	else:
 		print("Error: CollisionShape3D not found in cube instance")
 
+	# Assuming you have a movement script that expects to set a target, such as the player position
 	if cube_instance.has_method("set_target"):
-		# Assuming you have a movement script that expects to set a target, such as the player position
 		cube_instance.call("set_target", Vector3.ZERO, 5.0)  # Example of passing a target (replace with player position if needed)
-	
-	# If you want to manipulate the cube's collision, for example:
-	if cube_instance.has_node("CollisionShape3D"):
-		cube_instance.get_node("CollisionShape3D").set_collision_layer_value(10, true)
-	
+
 	# Randomize the next spawn interval
 	timer.wait_time = randf_range(0.5, 2.0)
 	
+# Utility function to generate a random float between min and max
 func randf_range(min: float, max: float) -> float:
 	return randf() * (max - min) + min

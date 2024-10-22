@@ -10,17 +10,14 @@ extends MeshInstance3D
 @export var globalCoords = true
 @export var scaleTexture = true
 
-@onready var audio_player = $LeftController/MeshInstance3D/AudioStreamPlayer3D
 
 @export var sword_color: Color
 var camera
 var cameraOrigin
-var raycast
 
-func _ready():
-	raycast = get_node("%RayCast3D")  # Ensure this is the path to your RayCast3D node
-	raycast.enabled = true
 
+func _ready():  
+	pass
 	
 
 func _process(delta):
@@ -29,17 +26,6 @@ func _process(delta):
 	points[0] = get_parent_node_3d().global_position
 	points[1] = (-get_parent_node_3d().global_basis.z * 1) + points[0]
 	
-	if raycast.is_colliding():
-		var collider = raycast.get_collider()
-		
-		if collider is Area3D:
-			# We hit the cube, queue it for deletion
-			
-			if audio_player != null:
-				audio_player.play()
-				$"beep".play()
-			collider.get_parent().call("split_cube")
-			# Destroy the cube
 	
 	if points.size() < 2:
 		return

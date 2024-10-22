@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://1jxnlc2cdmek"]
+
+[ext_resource type="Script" path="res://Scripts/BlueCube.gd" id="1_yitwq"]
+[ext_resource type="AudioStream" uid="uid://kfdto8dgydov" path="res://Sound/beep.mp3" id="2_yhils"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tpboe"]
+albedo_color = Color(0.294767, 0.280351, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nhb1q"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_bnw21"]
+
+[node name="Moving Cube Blue" type="CSGBox3D"]
+transform = Transform3D(0.0995455, 0.612203, 0.784409, -0.00617042, 0.78869, -0.61476, -0.995014, 0.0563565, 0.0822881, 0.012, 1.57364, 10)
+use_collision = true
+collision_layer = 256
+collision_mask = 256
+size = Vector3(0.5, 0.5, 0.5)
+material = SubResource("StandardMaterial3D_tpboe")
+script = ExtResource("1_yitwq")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 3.72529e-09, 1, 4.74975e-08, 0, -3.91155e-08, 1, 0, 0, 0)
+collision_layer = 256
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_nhb1q")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+layers = 0
+mesh = SubResource("ImmediateMesh_bnw21")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_yhils")
