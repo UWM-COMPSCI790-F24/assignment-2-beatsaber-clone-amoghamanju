@@ -1,0 +1,48 @@
+[gd_scene load_steps=11 format=3 uid="uid://ot8x4unyi8hs"]
+
+[ext_resource type="Script" path="res://Scripts/XRRig.gd" id="1_rqcvd"]
+[ext_resource type="Material" uid="uid://bdo426i81l087" path="res://Materials/ground.tres" id="2_5winy"]
+[ext_resource type="PackedScene" uid="uid://cpar0vxj7hji" path="res://SceneInstance/XR_Rig.tscn" id="2_bc2m8"]
+[ext_resource type="Script" path="res://Scenes/world_environment.gd" id="3_ecipe"]
+[ext_resource type="PackedScene" uid="uid://ufjv3isqwrri" path="res://SceneInstance/BlueCube.tscn" id="4_8gugc"]
+[ext_resource type="PackedScene" uid="uid://dylg4cbh3o7d8" path="res://SceneInstance/cube_spawner.tscn" id="6_8fjmf"]
+[ext_resource type="PackedScene" uid="uid://dyl1s357lir5h" path="res://SceneInstance/RedCube.tscn" id="6_lsaal"]
+
+[sub_resource type="Environment" id="Environment_xrb10"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_jj87v"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ep6q4"]
+size = Vector3(10, 0.1, 10)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_rqcvd")
+
+[node name="XROrigin3D" parent="." instance=ExtResource("2_bc2m8")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.702588, 0.519666, 0.486125, -0.711597, 0.513087, 0.47997, 0, -0.683146, 0.730282, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_xrb10")
+camera_attributes = SubResource("CameraAttributesPractical_jj87v")
+script = ExtResource("3_ecipe")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="WorldEnvironment"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="WorldEnvironment/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0509903, 0.032438, -0.0394304)
+size = Vector3(10, 0.1, 10)
+material = ExtResource("2_5winy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/StaticBody3D"]
+shape = SubResource("BoxShape3D_ep6q4")
+
+[node name="BlueCube" parent="." instance=ExtResource("4_8gugc")]
+transform = Transform3D(0.0995455, 0.612203, 0.784409, -0.00617042, 0.78869, -0.61476, -0.995014, 0.0563565, 0.0822881, -0.921733, 2.58845, 9.99409)
+size = Vector3(0.5, 0.5, 0.356323)
+
+[node name="RedCube" parent="." instance=ExtResource("6_lsaal")]
+transform = Transform3D(1, -2.98023e-08, -7.45058e-09, 2.98023e-08, 1, 0.000366524, 7.45058e-09, -0.000366524, 1, 1.27234, 2.67599, 10.0939)
+
+[node name="CubeSpawner" parent="." instance=ExtResource("6_8fjmf")]

@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://ufjv3isqwrri"]
+
+[ext_resource type="Script" path="res://Scenes/moving_cube.gd" id="1_xeisw"]
+[ext_resource type="AudioStream" uid="uid://fja78i3net5r" path="res://Audio/beep.mp3" id="2_iemuo"]
+
+[sub_resource type="Gradient" id="Gradient_frxvd"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vcg24"]
+gradient = SubResource("Gradient_frxvd")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tpboe"]
+albedo_color = Color(0.258824, 0.105882, 1, 1)
+albedo_texture = SubResource("GradientTexture2D_vcg24")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nhb1q"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_jni1v"]
+
+[node name="Moving Cube Blue" type="CSGBox3D"]
+transform = Transform3D(0.0995455, 0.612203, 0.784409, -0.00617042, 0.78869, -0.61476, -0.995014, 0.0563565, 0.0822881, 0.012, 1.57364, 10)
+size = Vector3(0.5, 0.5, 0.5)
+material = SubResource("StandardMaterial3D_tpboe")
+script = ExtResource("1_xeisw")
+cube_color = Color(0.258824, 0.105882, 1, 1)
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 3.72529e-09, 1, 4.74975e-08, 0, -3.91155e-08, 1, 0, 0, 0)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_nhb1q")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("ImmediateMesh_jni1v")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_iemuo")
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

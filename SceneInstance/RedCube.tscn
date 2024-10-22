@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://dyl1s357lir5h"]
+
+[ext_resource type="Script" path="res://Scripts/red_cube.gd" id="1_qu5o7"]
+
+[sub_resource type="Gradient" id="Gradient_sg8p1"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nhrme"]
+gradient = SubResource("Gradient_sg8p1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wwp81"]
+albedo_color = Color(1, 0.0627451, 0.113725, 1)
+albedo_texture = SubResource("GradientTexture2D_nhrme")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kpmxd"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_h8ytl"]
+
+[node name="CSGBox3D" type="CSGBox3D"]
+size = Vector3(0.5, 0.5, 0.5)
+material = SubResource("StandardMaterial3D_wwp81")
+script = ExtResource("1_qu5o7")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_kpmxd")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("ImmediateMesh_h8ytl")

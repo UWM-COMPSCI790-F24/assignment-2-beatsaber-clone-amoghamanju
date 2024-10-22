@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://cpar0vxj7hji"]
+
+[ext_resource type="Script" path="res://Scripts/XRSetup.gd" id="1_8lffc"]
+[ext_resource type="PackedScene" uid="uid://brsx4ser247uu" path="res://SceneInstance/subControllers.tscn" id="1_bcydg"]
+[ext_resource type="PackedScene" uid="uid://cnwp7ndjr4s8y" path="res://Quest2Controllers/Quest2Controllers/OculusQuest2TouchController_Left.gltf" id="2_5ug46"]
+[ext_resource type="PackedScene" uid="uid://bc8lh0rihgxvi" path="res://Quest2Controllers/Quest2Controllers/OculusQuest2TouchController_Right.gltf" id="3_21c7f"]
+[ext_resource type="Script" path="res://SceneInstance/mesh_instance_3d.gd" id="4_t8gee"]
+[ext_resource type="Script" path="res://SceneInstance/ray_cast_3d.gd" id="6_4ds5e"]
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_ft0vx"]
+
+[node name="XROrigin3D" type="XROrigin3D"]
+script = ExtResource("1_8lffc")
+
+[node name="XRCamera3D" type="XRCamera3D" parent="."]
+transform = Transform3D(0.998497, -0.0548108, 0, 0.053612, 0.976659, 0.207997, -0.0114005, -0.207684, 0.978129, 0, 0.190391, 0)
+fov = 43.4439
+
+[node name="Left Controller" parent="." instance=ExtResource("1_bcydg")]
+
+[node name="OculusQuest2TouchController_Left2" parent="Left Controller" instance=ExtResource("2_5ug46")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Left Controller"]
+mesh = SubResource("ImmediateMesh_ft0vx")
+script = ExtResource("4_t8gee")
+
+[node name="Right Controller" parent="." instance=ExtResource("1_bcydg")]
+tracker = &"right_hand"
+
+[node name="OculusQuest2TouchController_Right" parent="Right Controller" instance=ExtResource("3_21c7f")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Right Controller"]
+mesh = SubResource("ImmediateMesh_ft0vx")
+script = ExtResource("4_t8gee")
+
+[node name="RayCast3D" type="RayCast3D" parent="Right Controller/MeshInstance3D"]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -1)
+script = ExtResource("6_4ds5e")
