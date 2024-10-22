@@ -7,16 +7,19 @@ var left_laser_on = false
 @onready var right_laser_ray = $RightController/RayCast3D
 @onready var left_laser = $LeftController/MeshInstance3D  # Reference to the right laser (MeshInstance3D)
 @onready var left_laser_ray = $LeftController/RayCast3D
+var yPos: float  # Store the initial Y position of the player
+signal pose_recentered  # Signal for pose recentering
 
 func _ready():
 	xr_interface = XRServer.find_interface("OpenXR")
 	if xr_interface and xr_interface.is_initialized():
 		print("OpenXR initialized successfully")
-
+		
+		get_viewport().use_xr = true
 		# Turn off v-sync!
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 		xr_interface.connect("on_pose_recentered", Callable(self, "_on_pose_recentered"))
-		print("OpenXR recenter signal connected.")
+		yPos = global_position.y
 
 		# Change our main viewport to output to the HMD
 		get_viewport().use_xr = true
@@ -46,3 +49,10 @@ func _toggle_laser(laser_mesh: MeshInstance3D, laser_raycast: RayCast3D, laser_o
 		laser_raycast.cast_to = Vector3(0, 0, -1) * 1.0  # Cast 1 meter in the negative Z direction
 	else:
 		print("Laser is OFF")
+		
+func _on_openxr_pose_recentered() -> void:
+	# Recenter the player's position but keep the tilt (head rotation)
+	XRServer.center_on_hmd(XRServer.RESET_BUT_KEEP_TILT, true)
+	
+	# Reset the player's Y position to the initial value
+	global_position.y = yPos

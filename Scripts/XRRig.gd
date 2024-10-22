@@ -6,7 +6,8 @@ extends Node3D
 @export var spawn_distance: float = 10.0  # Distance from the player where the cubes will spawn
 @export var spawn_height_range: Vector2 = Vector2(1, 3)  # Height range for cube spawning
 @export var cube_speed: float = 5.0  # Speed at which cubes move towards the player
-
+var yPos: float  # Store the initial Y position of the player
+signal pose_recentered
 var player_position: Vector3
 var spawn_timer: Timer
 
@@ -48,3 +49,10 @@ func _spawn_cube():
 # Utility function to get a random float in a range
 func randf_range(min: float, max: float) -> float:
 	return randf() * (max - min) + min
+
+
+func _on_xr_origin_3d_pose_recentered() -> void:
+	XRServer.center_on_hmd(XRServer.RESET_BUT_KEEP_TILT, true)
+	
+	# Reset the player's Y position to the initial value
+	global_position.y = yPos# Replace with function body.
