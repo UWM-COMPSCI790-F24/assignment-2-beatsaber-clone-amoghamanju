@@ -1,3 +1,6 @@
+I have added the pose recentered on right controller and it recenters when we press primary button.
+
+
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/_jOzbjmU)
 # Assignment 2: Making Beat Saber in Godot
 
