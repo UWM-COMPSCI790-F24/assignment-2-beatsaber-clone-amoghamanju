@@ -1,0 +1,44 @@
+[gd_scene load_steps=10 format=3 uid="uid://cc1gg2xtkcsda"]
+
+[ext_resource type="Script" path="res://Scripts/world_environment.gd" id="3_u2d4d"]
+[ext_resource type="PackedScene" uid="uid://1jxnlc2cdmek" path="res://SceneInstances/BlueCube.tscn" id="4_nxkd2"]
+[ext_resource type="Material" uid="uid://bsdcu1jelcsgp" path="res://Materials/ground.tres" id="4_y10oq"]
+[ext_resource type="PackedScene" uid="uid://dqn6eenc4fxhd" path="res://SceneInstances/RedCube.tscn" id="5_xuwcw"]
+[ext_resource type="PackedScene" uid="uid://c4qv8ig648cal" path="res://SceneInstances/cube_spawner.tscn" id="6_2scta"]
+[ext_resource type="PackedScene" uid="uid://ba448glx7dan1" path="res://SceneInstances/XRRig.tscn" id="7_myvj5"]
+
+[sub_resource type="Environment" id="Environment_xrb10"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_jj87v"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ep6q4"]
+size = Vector3(10, 0.1, 10)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.702588, 0.519666, 0.486125, -0.711597, 0.513087, 0.47997, 0, -0.683146, 0.730282, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_xrb10")
+camera_attributes = SubResource("CameraAttributesPractical_jj87v")
+script = ExtResource("3_u2d4d")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="WorldEnvironment"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="WorldEnvironment/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0509903, 0.032438, -0.0394304)
+size = Vector3(10, 0.1, 10)
+material = ExtResource("4_y10oq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/StaticBody3D"]
+shape = SubResource("BoxShape3D_ep6q4")
+
+[node name="BlueCube" parent="." instance=ExtResource("4_nxkd2")]
+
+[node name="RedCube" parent="." instance=ExtResource("5_xuwcw")]
+transform = Transform3D(0.648691, -4.15001e-08, 0.761052, 2.98023e-08, 1, 3.72529e-09, -0.761052, 4.29456e-08, 0.648691, 1.61364, 1.49717, 10.0276)
+
+[node name="CubeSpawner" parent="." instance=ExtResource("6_2scta")]
+
+[node name="XROrigin3D" parent="." instance=ExtResource("7_myvj5")]
